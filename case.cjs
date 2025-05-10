@@ -6,23 +6,33 @@ const rootDir = path.resolve(".");
 const exts = [".js", ".jsx", ".ts", ".tsx"];
 const skipDirs = new Set(["node_modules", ".git", "dist", "build", "out"]);
 
-function renameAllToLowerCase(dir) {
+// Step 1: Recursively walk all paths and collect them (bottom-up)
+function walkPaths(dir, all = []) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
 
   for (const entry of entries) {
-    const oldPath = path.join(dir, entry.name);
-    const newName = entry.name.toLowerCase();
-    const newPath = path.join(dir, newName);
-
+    const fullPath = path.join(dir, entry.name);
     if (skipDirs.has(entry.name)) continue;
 
-    // Recurse first
     if (entry.isDirectory()) {
-      renameAllToLowerCase(oldPath);
+      walkPaths(fullPath, all);
     }
+    all.push({ path: fullPath, isDir: entry.isDirectory() });
+  }
+  return all;
+}
 
-    // Then rename if necessary
-    if (oldPath !== newPath) {
+// Step 2: Rename all files and folders to lowercase
+function renameAllToLowerCase() {
+  const items = walkPaths(rootDir);
+
+  // Rename files first, then folders (bottom-up)
+  for (const { path: oldPath, isDir } of items.reverse()) {
+    const dir = path.dirname(oldPath);
+    const newName = path.basename(oldPath).toLowerCase();
+    const newPath = path.join(dir, newName);
+
+    if (oldPath !== newPath && fs.existsSync(oldPath)) {
       try {
         fs.renameSync(oldPath, newPath);
         console.log(`🔄 Renamed: ${oldPath} → ${newPath}`);
@@ -33,6 +43,7 @@ function renameAllToLowerCase(dir) {
   }
 }
 
+// Step 3: Fix imports
 function fixImportsInFile(filePath) {
   let code = fs.readFileSync(filePath, "utf8");
   let updated = false;
@@ -79,15 +90,16 @@ function walkAndFixImports(dir) {
   }
 }
 
+// Run the full script
 function run() {
-  console.log(`📁 Starting in project directory: ${rootDir}`);
-  console.log("🔄 Renaming files/folders to lowercase...");
-  renameAllToLowerCase(rootDir);
+  console.log(`📁 Starting in: ${rootDir}`);
+  console.log("🔄 Renaming all files and folders to lowercase...");
+  renameAllToLowerCase();
 
   console.log("🔍 Fixing import paths...");
   walkAndFixImports(rootDir);
 
-  console.log("✅ All filenames and imports updated.");
+  console.log("✅ All done! Files/folders lowercased and imports updated.");
 }
 
 run();
