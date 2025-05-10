@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, Search, Plus } from 'lucide-react';
 import axios from 'axios';
-import base_Api from '../../utils/baseApi.jsx';
+import base_Api from '../../utils/baseapi.jsx';
 import { useNavigate } from 'react-router-dom';
 
-import Group from './Group.jsx';
-import Category from './Category.jsx';
-import RuleTable from './Domain/RuleTable.jsx';
-import AddRuleModal from './Domain/AddRuleModal.jsx';
+import Group from './group.jsx';
+import Category from './category.jsx';
+import RuleTable from './domain/ruletable.jsx';
+import AddRuleModal from './domain/addrulemodal.jsx';
 
 export default function Dashboard() {
   const navigate = useNavigate();

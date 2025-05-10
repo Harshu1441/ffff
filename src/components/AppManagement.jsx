@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import AppGroup from "./appBlock/appGroup.jsx";
-import AppRuleTable from './appBlock/appRuleTable.jsx';
-import AddAppRuleModal from './appBlock/addAppRuleModal.jsx';
-import AppCategory from './appBlock/appCategory.jsx';
+import AppGroup from "./appblock/appgroup.jsx";
+import AppRuleTable from './appblock/appruletable.jsx';
+import AddAppRuleModal from './appblock/addapprulemodal.jsx';
+import AppCategory from './appblock/appcategory.jsx';
 import { Plus, Search } from 'lucide-react';
 
 const AppManagement = () => {

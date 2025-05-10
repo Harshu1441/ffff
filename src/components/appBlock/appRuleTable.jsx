@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Edit2, Trash2, Eye } from 'lucide-react';
-import EditAppRuleModal from './editAppRuleModal.jsx';
-import DeleteAppRuleModal from './deleteAppRuleModal.jsx';
-import AddAppRuleModal from './addAppRuleModal.jsx';
-import SuccessModal from '../../eventModal/SuccessModal.jsx';
+import EditAppRuleModal from './editapprulemodal.jsx';
+import DeleteAppRuleModal from './deleteapprulemodal.jsx';
+import AddAppRuleModal from './addapprulemodal.jsx';
+import SuccessModal from '../../eventmodal/successmodal.jsx';
 import axios from 'axios';
-import base_Api from '../../../utils/baseApi2.jsx';
-import ErrorModal from '../../eventModal/ErrorModal.jsx';
+import base_Api from '../../../utils/baseapi2.jsx';
+import ErrorModal from '../../eventmodal/errormodal.jsx';
 
 export default function AppRuleTable({ searchTerm }) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);

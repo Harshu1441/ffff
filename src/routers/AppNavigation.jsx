@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Dashboard from '../components/Dashboard.jsx';
-import Logs from '../components/Logs.jsx';
-import Sidebar from '../comman/Sidebar.jsx';
-import AppManagement from '../components/AppManagement.jsx';
+import Dashboard from '../components/dashboard.jsx';
+import Logs from '../components/logs.jsx';
+import Sidebar from '../comman/sidebar.jsx';
+import AppManagement from '../components/appmanagement.jsx';
 import Agents from '../components/Agents.jsx/Agents';
-import Login from "../components/Login.jsx";
-import ProtectedRoute from '../components/ProtectedRoute.jsx';
+import Login from "../components/login.jsx";
+import ProtectedRoute from '../components/protectedroute.jsx';
 
 function AppNavigation() {
   return (

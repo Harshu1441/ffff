@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import BlockedTrafficTable from './Logs/BlockedTrafficTable.jsx';
-import DnsQueriesTable from './Logs/DnsQueriesTable.jsx';
-import FirewallEventsTable from './Logs/FirewallEventsTable.jsx';
-import NetworkConnectionsTable from './Logs/NetworkConnectionsTable.jsx';
-import base_Api from '../../utils/baseApi.jsx';
+import BlockedTrafficTable from './logs/blockedtraffictable.jsx';
+import DnsQueriesTable from './logs/dnsqueriestable.jsx';
+import FirewallEventsTable from './logs/firewalleventstable.jsx';
+import NetworkConnectionsTable from './logs/networkconnectionstable.jsx';
+import base_Api from '../../utils/baseapi.jsx';
 
 export default function Logs() {
   const [logQueue, setLogQueue] = useState({}); // Store logs with timestamps

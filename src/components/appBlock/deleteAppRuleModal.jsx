@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AlertCircle } from 'lucide-react';
 import PropTypes from 'prop-types';
-import base_Api from '../../../utils/baseApi2.jsx';
+import base_Api from '../../../utils/baseapi2.jsx';
 
 const DeleteAppRuleModal = ({ 
   ruleToDelete, 

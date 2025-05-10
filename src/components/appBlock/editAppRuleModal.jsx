@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { X, Search, Check, ChevronUp, ChevronDown, Activity, Plus } from 'lucide-react';
 import axios from 'axios';
-import base_Api from '../../../utils/baseApi2.jsx';
-import Loader from '../../comman/Loader.jsx';
-import SuccessModal from '../../eventModal/SuccessModal.jsx';
-import ErrorModal from '../../eventModal/ErrorModal.jsx';
+import base_Api from '../../../utils/baseapi2.jsx';
+import Loader from '../../comman/loader.jsx';
+import SuccessModal from '../../eventmodal/successmodal.jsx';
+import ErrorModal from '../../eventmodal/errormodal.jsx';
 
 export default function EditAppRuleModal({
   isOpen,

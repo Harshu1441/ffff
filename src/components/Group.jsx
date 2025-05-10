@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Menu, Edit2, Trash2, Search, Plus, X, Users, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import axios from 'axios';
-import base_Api from '../../utils/baseApi.jsx';
+import base_Api from '../../utils/baseapi.jsx';
 
 const Group = () => {
   // State declarations

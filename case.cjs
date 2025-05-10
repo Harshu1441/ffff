@@ -1,79 +1,93 @@
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
+#!/usr/bin/env node
+const fs = require("fs");
+const path = require("path");
 
-const rootDir = path.resolve(__dirname, 'src');
-const extensions = ['.js', '.ts', '.jsx', '.tsx', '.vue'];
+const rootDir = path.resolve(".");
+const exts = [".js", ".jsx", ".ts", ".tsx"];
+const skipDirs = new Set(["node_modules", ".git", "dist", "build", "out"]);
 
-function resolveImportPath(basePath) {
-  for (const ext of extensions) {
-    const fullPath = basePath + ext;
-    const actualFile = getRealFileCaseInsensitive(fullPath);
-    if (actualFile) return path.basename(fullPath);
+function renameAllToLowerCase(dir) {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const oldPath = path.join(dir, entry.name);
+    const newName = entry.name.toLowerCase();
+    const newPath = path.join(dir, newName);
+
+    if (skipDirs.has(entry.name)) continue;
+
+    // Recurse first
+    if (entry.isDirectory()) {
+      renameAllToLowerCase(oldPath);
+    }
+
+    // Then rename if necessary
+    if (oldPath !== newPath) {
+      try {
+        fs.renameSync(oldPath, newPath);
+        console.log(`🔄 Renamed: ${oldPath} → ${newPath}`);
+      } catch (err) {
+        console.warn(`⚠️ Could not rename: ${oldPath}`, err.message);
+      }
+    }
   }
-
-  // Check for index file inside a folder
-  for (const ext of extensions) {
-    const fullPath = path.join(basePath, 'index' + ext);
-    const actualFile = getRealFileCaseInsensitive(fullPath);
-    if (actualFile) return path.basename(basePath) + '/index' + ext;
-  }
-
-  return null;
 }
 
-function getRealFileCaseInsensitive(filepath) {
-  const dir = path.dirname(filepath);
-  const base = path.basename(filepath);
-  try {
-    const files = fs.readdirSync(dir);
-    return files.find(f => f.toLowerCase() === base.toLowerCase()) || null;
-  } catch (e) {
-    return null;
-  }
-}
+function fixImportsInFile(filePath) {
+  let code = fs.readFileSync(filePath, "utf8");
+  let updated = false;
 
-function fixFileImports(file) {
-  let content = fs.readFileSync(file, 'utf8');
-  let changed = false;
+  code = code.replace(
+    /(import\s.+?from\s+['"]|require\s*\(\s*['"])([^'"]+)(['"]\)?)/g,
+    (match, prefix, importPath, suffix) => {
+      if (importPath.startsWith(".")) {
+        const fullImportPath = path.resolve(path.dirname(filePath), importPath);
+        for (const ext of exts.concat(["", "/index"])) {
+          const testPath = fullImportPath + ext;
+          const lowerPath = testPath.toLowerCase();
 
-  const importRegex = /(import\s+[^'"]*?\s+from\s+['"])(\.{1,2}\/[^'"]+)(['"])/g;
+          if (fs.existsSync(lowerPath)) {
+            const relative = path
+              .relative(path.dirname(filePath), lowerPath)
+              .replace(/\\/g, "/");
 
-  content = content.replace(importRegex, (match, p1, importPath, p3) => {
-    const fullPath = path.resolve(path.dirname(file), importPath);
-    const resolved = resolveImportPath(fullPath);
-
-    if (!resolved) {
-      console.warn(`⚠️  Could not find file for import: "${importPath}" in ${file}`);
+            updated = true;
+            return `${prefix}${relative.startsWith(".") ? relative : "./" + relative}${suffix}`;
+          }
+        }
+      }
       return match;
     }
+  );
 
-    const importBase = path.basename(importPath);
-    const correctedPath = importPath.replace(importBase, resolved);
+  if (updated) {
+    fs.writeFileSync(filePath, code, "utf8");
+    console.log(`🛠️  Fixed imports in: ${filePath}`);
+  }
+}
 
-    if (importBase !== resolved) {
-      console.log(`🔧 Fixed in ${file}\n   ${importPath} → ${correctedPath}`);
-      changed = true;
-      return `${p1}${correctedPath}${p3}`;
+function walkAndFixImports(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const entryPath = path.join(dir, entry.name);
+    if (skipDirs.has(entry.name)) continue;
+
+    if (entry.isDirectory()) {
+      walkAndFixImports(entryPath);
+    } else if (exts.includes(path.extname(entry.name))) {
+      fixImportsInFile(entryPath);
     }
-
-    return match;
-  });
-
-  if (changed) {
-    fs.writeFileSync(file, content, 'utf8');
   }
 }
 
-function fixAllFiles() {
-  console.log("🔍 Looking in folder:", rootDir);
-  const files = glob.sync(`${rootDir}/**/*.{js,ts,jsx,tsx,vue}`, { nodir: true });
-  console.log(`🔍 Scanning ${files.length} files...`);
-  if (files.length === 0) {
-    console.warn('⚠️  No matching files found.');
-  }
-  files.forEach(fixFileImports);
-  console.log('✅ Done.');
+function run() {
+  console.log(`📁 Starting in project directory: ${rootDir}`);
+  console.log("🔄 Renaming files/folders to lowercase...");
+  renameAllToLowerCase(rootDir);
+
+  console.log("🔍 Fixing import paths...");
+  walkAndFixImports(rootDir);
+
+  console.log("✅ All filenames and imports updated.");
 }
 
-fixAllFiles();
+run();

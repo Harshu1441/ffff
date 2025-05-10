@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AlertCircle } from 'lucide-react';
 import axios from 'axios';
-import base_Api from '../../../utils/baseApi.jsx';
+import base_Api from '../../../utils/baseapi.jsx';
 
 const DeleteRuleModal = ({ 
   ruleToDelete, 
