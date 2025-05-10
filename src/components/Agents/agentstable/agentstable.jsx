@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Activity, Shield, Eye } from 'lucide-react';
 import base_Api from '../../../../utils/baseApi';
-import AgentViewModal from '../AgentViewModal/AgentViewModal';
+import AgentViewModal from '../AgentViewModal/agentViewModal';
 
 const AgentsTable = () => {
   const [agents, setAgents] = useState([]);

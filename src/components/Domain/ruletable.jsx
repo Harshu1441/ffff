@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Edit, Trash2, Eye } from 'lucide-react';
 import axios from 'axios';
 
-import EditRuleModal from './editrulemodal';
-import DeleteRuleModal from './deleterulemodal';
-import base_Api from '../../../utils/baseapi';
-import Loader from '../../common/loader';
+import EditRuleModal from './editRuleModal';
+import DeleteRuleModal from './deleteRuleModal';
+import base_Api from '../../../utils/baseApi';
+import Loader from '../../comman/Loader';
 
 
 // Helper function to truncate arrays

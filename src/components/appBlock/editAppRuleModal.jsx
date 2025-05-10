@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { X, Search, Check, ChevronUp, ChevronDown, Activity, Plus } from 'lucide-react';
 import axios from 'axios';
-import base_Api from '../../../utils/baseapi2';
-import Loader from '../../common/loader';
-import SuccessModal from '../../eventmodal/successmodal';
-import ErrorModal from '../../eventmodal/errormodal';
+import base_Api from '../../../utils/baseApi2';
+import Loader from '../../comman/Loader';
+import SuccessModal from '../../eventModal/successModal';
+import ErrorModal from '../../eventModal/errorModal';
 
 export default function EditAppRuleModal({
   isOpen,
@@ -200,8 +200,8 @@ export default function EditAppRuleModal({
           show: true,
           message: 'Rule Updated Successfully!',
           subMessage: `Rule "${formData.rule_name}" has been updated.`,
-        });
-
+        }); 
+      window.location.reload(); // Reload the page to reflect changes
         // Notify parent component
         if (onRuleUpdated) {
           await onRuleUpdated(formData);

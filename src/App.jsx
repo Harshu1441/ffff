@@ -1,5 +1,5 @@
 import React from 'react'
-import AppNavigation from './routers/appnavigation' // Use default import
+import AppNavigation from './routers/appNavigation' // Use default import
 
 const App = () => {
   return (

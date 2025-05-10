@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { X, Search, Check, ChevronUp, ChevronDown, Activity, Plus } from 'lucide-react';
 import axios from 'axios';
-import base_Api from '../../../utils/baseapi';
-import Loader from '../../common/loader';
-import SuccessModal from '../../eventmodal/successmodal';
-import ErrorModal from '../../eventmodal/errormodal';
+import base_Api from '../../../utils/baseApi';
+import Loader from '../../comman/Loader';
+import SuccessModal from '../../eventModal/successModal';
+import ErrorModal from '../../eventModal/errorModal';
 
 export default function AddAppRuleModal({
   isOpen,
@@ -198,6 +198,8 @@ export default function AddAppRuleModal({
           processes: formData.processes,
           mode: formData.mode,
         };
+        window.location.reload(); // Reload the page to reflect changes
+
 
         // Notify parent component
         if (onRuleAdded) {

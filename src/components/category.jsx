@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, X } from 'lucide-react';
 import axios from 'axios';
-import base_Api from '../../utils/baseapi';
+import base_Api from '../../utils/baseApi';
 
 const Category = () => {
   const [showCreateCategoryModal, setShowCreateCategoryModal] = useState(false);

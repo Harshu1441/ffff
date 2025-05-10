@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Menu, Edit2, Trash2, Search, Plus, X, Layout, Check, ChevronDown, ChevronUp } from 'lucide-react';
 import axios from 'axios';
-import base_Api from '../../../utils/baseapi2';
+import base_Api from '../../../utils/baseApi2';
 
 const AppGroup = () => {
   // State declarations
