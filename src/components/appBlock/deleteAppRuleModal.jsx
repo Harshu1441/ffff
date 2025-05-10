@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { AlertCircle } from 'lucide-react';
 import PropTypes from 'prop-types';
+import SuccessModal from '../../eventmodal/successmodal';
+import ErrorModal from '../../eventmodal/errormodal';
 
 const DeleteAppRuleModal = ({
   ruleToDelete,
@@ -9,6 +11,16 @@ const DeleteAppRuleModal = ({
   isDeleting,
 }) => {
   const [deleteOption, setDeleteOption] = useState(null);
+  const [successModalConfig, setSuccessModalConfig] = useState({
+    show: false,
+    message: '',
+    subMessage: ''
+  });
+  const [errorModalConfig, setErrorModalConfig] = useState({
+    show: false,
+    message: '',
+    subMessage: ''
+  });
 
   const agentDeleteOptions = [
     { id: 1, label: 'Remove rule for this agent' },
@@ -38,12 +50,49 @@ const DeleteAppRuleModal = ({
 
   const handleDelete = () => {
     if (!deleteOption) return;
-    confirmDelete(deleteOption);
-    setShowDeleteConfirm(false);
+    try {
+      confirmDelete(deleteOption);
+      setSuccessModalConfig({
+        show: true,
+        message: 'Rule Deleted Successfully',
+        subMessage: `Rule "${ruleToDelete?.rule_name}" has been deleted.`
+      });
+      setTimeout(() => {
+        setSuccessModalConfig({ show: false, message: '', subMessage: '' });
+        setShowDeleteConfirm(false);
+      }, 2000);
+    } catch (error) {
+      setErrorModalConfig({
+        show: true,
+        message: 'Failed to Delete Rule',
+        subMessage: error.message || 'An error occurred while deleting the rule.'
+      });
+    }
   };
 
   return (
     <div className="fixed inset-0 backdrop-blur-sm bg-opacity-40 flex justify-center items-center z-50">
+      {successModalConfig.show && (
+        <SuccessModal
+          message={successModalConfig.message}
+          subMessage={successModalConfig.subMessage}
+          onClose={() => {
+            setSuccessModalConfig({ show: false, message: '', subMessage: '' });
+            setShowDeleteConfirm(false);
+          }}
+          autoCloseDelay={2000}
+        />
+      )}
+      
+      {errorModalConfig.show && (
+        <ErrorModal
+          message={errorModalConfig.message}
+          subMessage={errorModalConfig.subMessage}
+          onClose={() => setErrorModalConfig({ show: false, message: '', subMessage: '' })}
+          autoCloseDelay={3000}
+        />
+      )}
+
       <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-xl">
         <div className="flex items-start mb-4">
           <div className="flex-shrink-0 text-red-500">

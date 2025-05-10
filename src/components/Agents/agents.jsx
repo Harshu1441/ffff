@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, BarChart3, Users, Shield, Settings, Bell, Menu, X, ChevronDown, Activity, Circle } from 'lucide-react';
-import AgentViewModal from './AgentViewModal/agentViewModal';
+import AgentViewModal from './AgentViewModal/agentviewmodal';
 import base_Api from '../../../utils/baseApi';
 import AgentsTable from './agentsTable/agentsTable';
 

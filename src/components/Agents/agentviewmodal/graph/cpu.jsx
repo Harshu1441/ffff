@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { useRealtimeStats } from '../../../../hooks/useRealtimeStats';
+import { useRealtimeStats } from '../../../../hooks/userealtimestats';
 
 const CPU = ({ initialData }) => {
   const stats = useRealtimeStats(initialData);

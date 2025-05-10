@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { useRealtimeStats } from '../../../../hooks/useRealtimeStats';
+import { useRealtimeStats } from '../../../../hooks/userealtimestats';
 
 const MemoryUse = ({ initialData }) => {
   const [memoryData, setMemoryData] = useState([]);

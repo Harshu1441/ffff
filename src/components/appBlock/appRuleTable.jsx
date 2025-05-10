@@ -386,8 +386,8 @@ import { Edit2, Trash2 } from 'lucide-react';
 import EditAppRuleModal from './editAppRuleModal';
 import DeleteAppRuleModal from './deleteAppRuleModal';
 import AddAppRuleModal from './addAppRuleModal';
-import SuccessModal from '../../eventModal/successModal';
-import ErrorModal from '../../eventModal/errorModal';
+import SuccessModal from '../../eventmodal/successmodal';
+import ErrorModal from '../../eventmodal/errormodal';
 import axios from 'axios';
 import base_Api from '../../../utils/baseApi2';
 

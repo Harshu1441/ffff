@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { useRealtimeStats } from '../../../../hooks/useRealtimeStats';
+import { useRealtimeStats } from '../../../../hooks/userealtimestats';
 
 const NetworkTraffic = ({ initialData }) => {
   const stats = useRealtimeStats(initialData);

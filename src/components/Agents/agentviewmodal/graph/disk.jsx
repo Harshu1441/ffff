@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
-import { useRealtimeStats } from '../../../../hooks/useRealtimeStats';
+import { useRealtimeStats } from '../../../../hooks/userealtimestats';
 
 const Disk = ({ initialData }) => {
   const [diskData, setDiskData] = useState([]);
